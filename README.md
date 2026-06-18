@@ -4,15 +4,15 @@ Search your figma files from Alfred and then open in the desktop app or browser.
 
 ## Setup
 
-- Create a token on figma.com → Settings → Security → Personal Access Token.
-- Find your team ID by opening figma.com and looking for the URL segment after “team”.
+1. Create a token on figma.com → Settings → Security → Personal Access Token.
+2. Find your team ID by opening figma.com and looking for the URL segment after “team”.
     - This is different depending on what type of account you have, personal accounts always show it and team account require you to visit a project.
     - Examples:
     - https://www.figma.com/files/team/XXX/project/XXX?fuid=XXX
     - https://www.figma.com/files/XXX/team/XXX?fuid=XXX
-- Double click the .alfredworkflow file and enter your token and team ID.
-- Run "fig" and your files will sync.
-- To edit the workflow yourself and sync files locally, add a .env with two values:
+3. Double click the .alfredworkflow file and enter your token and team ID.
+4. Run "fig" and your files will sync.
+5. To edit the workflow yourself and sync files locally, add a .env with two values:
     - figma_token=figd_XXXXXX
     - figma_work_team_id=XXXXXX
 
