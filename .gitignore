@@ -1,0 +1,10 @@
+# Secrets / local-only
+.env
+.env.*
+
+# Runtime artifacts created by the workflow
+.sync.lock
+*.tmp
+
+# macOS
+.DS_Store

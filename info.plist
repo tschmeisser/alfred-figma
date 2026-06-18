@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>com.tschmeisser.figma-search</string>
+	<key>category</key>
+	<string>Productivity</string>
+	<key>connections</key>
+	<dict>
+		<key>7E2A1F00-0000-0000-0000-000000000001</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>7E2A1F00-0000-0000-0000-000000000002</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Travis Schmeisser</string>
+	<key>description</key>
+	<string>Search your Figma files and open it in the desktop app.</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Figma Search</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<true/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>fig</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>runningsubtext</key>
+				<string></string>
+				<key>script</key>
+				<string>/usr/bin/python3 figma_search.py</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Search your Figma files, ↩ to open in desktop</string>
+				<key>title</key>
+				<string>Figma Search</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>7E2A1F00-0000-0000-0000-000000000001</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>/bin/bash handle.sh "$1"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>7E2A1F00-0000-0000-0000-000000000002</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string># Setup
+
+You’ll need to create a token on figma.com → Settings → Security → Personal Access Token
+
+You can find your team ID by opening a Figma and looking for the URL segment after “team” . This is different depending on what type of account you have, personal accounts always show it and team account require you to visit a project. Examples:
+
+- https://www.figma.com/files/team/XXX/project/XXX?fuid=XXX
+- https://www.figma.com/files/XXX/team/XXX?fuid=XXX
+
+# Using the file search
+
+Type "fig" then part of a file name to search your Figma files.
+
+The first time you run the command, it will sync all of your files.
+
+From the result list, hitting Return opens the selected file in the desktop app and cmd+Return opens it in the browser.
+
+The fig command also returns a "Resync files from Figma" action that refreshes all of your files (the list is saved locally).
+
+Change your token and team id with “Configure Workflow and Variables”.</string>
+	<key>uidata</key>
+	<dict>
+		<key>7E2A1F00-0000-0000-0000-000000000001</key>
+		<dict>
+			<key>xpos</key>
+			<integer>60</integer>
+			<key>ypos</key>
+			<integer>60</integer>
+		</dict>
+		<key>7E2A1F00-0000-0000-0000-000000000002</key>
+		<dict>
+			<key>xpos</key>
+			<integer>340</integer>
+			<key>ypos</key>
+			<integer>60</integer>
+		</dict>
+	</dict>
+	<key>userconfigurationconfig</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string></string>
+				<key>placeholder</key>
+				<string>figd_...</string>
+				<key>required</key>
+				<false/>
+				<key>trim</key>
+				<true/>
+			</dict>
+			<key>description</key>
+			<string>Figma personal access token with "File content: Read" scope. Used only when resyncing.</string>
+			<key>label</key>
+			<string>Figma token</string>
+			<key>type</key>
+			<string>textfield</string>
+			<key>variable</key>
+			<string>figma_work_token</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string></string>
+				<key>placeholder</key>
+				<string></string>
+				<key>required</key>
+				<false/>
+				<key>trim</key>
+				<true/>
+			</dict>
+			<key>description</key>
+			<string>Numeric team id from figma.com/files/team/&lt;ID&gt;/...</string>
+			<key>label</key>
+			<string>Team id</string>
+			<key>type</key>
+			<string>textfield</string>
+			<key>variable</key>
+			<string>figma_work_team_id</string>
+		</dict>
+	</array>
+	<key>variables</key>
+	<dict>
+		<key>figma_work_token</key>
+		<string></string>
+		<key>figma_work_team_id</key>
+		<string></string>
+	</dict>
+	<key>variablesdontexport</key>
+	<array>
+		<string>figma_work_token</string>
+		<string>figma_work_team_id</string>
+	</array>
+	<key>version</key>
+	<string>1.0</string>
+	<key>webaddress</key>
+	<string></string>
+</dict>
+</plist>
