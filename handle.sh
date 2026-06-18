@@ -4,7 +4,7 @@
 #   anything else -> open the figma:// or https:// URL
 #
 # On resync, the Figma token + team id arrive as environment variables
-# (figma_work_token / figma_work_team_id) from the workflow's own configuration,
+# (figma_token / figma_team_id) from the workflow's own configuration,
 # so nothing is read from disk and the token never touches a Terminal or argv.
 arg="$1"
 here="$(cd "$(dirname "$0")" && pwd)"

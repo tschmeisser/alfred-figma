@@ -14,7 +14,7 @@ Search your figma files from Alfred and then open in the desktop app or browser.
 4. Run "fig" and your files will sync.
 5. To edit the workflow yourself and sync files locally, add a .env with two values:
     - figma_token=figd_XXXXXX
-    - figma_work_team_id=XXXXXX
+    - figma_team_id=XXXXXX
 
 ## Using the file search
 

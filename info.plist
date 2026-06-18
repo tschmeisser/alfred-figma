@@ -158,7 +158,7 @@ Change your token and team id with “Configure Workflow and Variables”.</stri
 			<key>type</key>
 			<string>textfield</string>
 			<key>variable</key>
-			<string>figma_work_token</string>
+			<string>figma_token</string>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -179,20 +179,20 @@ Change your token and team id with “Configure Workflow and Variables”.</stri
 			<key>type</key>
 			<string>textfield</string>
 			<key>variable</key>
-			<string>figma_work_team_id</string>
+			<string>figma_team_id</string>
 		</dict>
 	</array>
 	<key>variables</key>
 	<dict>
-		<key>figma_work_token</key>
+		<key>figma_token</key>
 		<string></string>
-		<key>figma_work_team_id</key>
+		<key>figma_team_id</key>
 		<string></string>
 	</dict>
 	<key>variablesdontexport</key>
 	<array>
-		<string>figma_work_token</string>
-		<string>figma_work_team_id</string>
+		<string>figma_token</string>
+		<string>figma_team_id</string>
 	</array>
 	<key>version</key>
 	<string>1.0</string>

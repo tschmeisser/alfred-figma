@@ -6,15 +6,12 @@ teams -> projects -> files and caches the result locally. Run it whenever
 you want to refresh the list; Alfred then searches the cache instantly.
 
 Usage:
-    python3 sync_files.py                 # uses work token + team from .env
-    python3 sync_files.py --personal      # uses personal token + team from .env
-    python3 sync_files.py TEAM_ID         # override the team id explicitly
+    python3 sync_files.py            # uses token + team from .env
+    python3 sync_files.py TEAM_ID    # override the team id explicitly
 
 Reads .env in this folder, expecting:
-    figma_work_token=figd_...
-    figma_work_team_id=1234567890
-    figma_personal_token=...
-    figma_personal_team_id=...
+    figma_token=figd_...
+    figma_team_id=1234567890
 
 Find a team id in the Figma URL while viewing a team in the browser:
     figma.com/files/team/<TEAM_ID>/...
@@ -71,20 +68,19 @@ def main():
 
 
 def _sync():
-    args = [a for a in sys.argv[1:] if a != "--personal"]
-    scope = "personal" if "--personal" in sys.argv else "work"
+    args = sys.argv[1:]
     env = load_env()
 
-    token = resolve(f"figma_{scope}_token", env)
+    token = resolve("figma_token", env)
     if not token:
-        sys.exit(f"No {scope} token. Set it in the workflow config (figma_{scope}_token) or .env")
+        sys.exit("No token. Set it in the workflow config (figma_token) or .env")
 
-    team_id = args[0] if args else resolve(f"figma_{scope}_team_id", env)
+    team_id = args[0] if args else resolve("figma_team_id", env)
     if not team_id:
         sys.exit(
-            f"No team id. Set figma_{scope}_team_id in .env, or pass it:\n"
-            f"    python3 sync_files.py TEAM_ID\n"
-            f"Find it in figma.com/files/team/<TEAM_ID>/..."
+            "No team id. Set figma_team_id in .env, or pass it:\n"
+            "    python3 sync_files.py TEAM_ID\n"
+            "Find it in figma.com/files/team/<TEAM_ID>/..."
         )
 
     try:

@@ -51,7 +51,7 @@ def load_files():
 def creds_present():
     def has(name):
         return bool(os.environ.get(name) or os.environ.get(name.upper()))
-    return has("figma_work_token") and has("figma_work_team_id")
+    return has("figma_token") and has("figma_team_id")
 
 
 def sync_running():
