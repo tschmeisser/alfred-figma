@@ -1,4 +1,8 @@
-# Setup
+# Alfred Figma Search
+
+Search your figma files from Alfred and then open in the desktop app or browser.
+
+## Setup
 
 You’ll need to create a token on figma.com → Settings → Security → Personal Access Token
 
@@ -7,7 +11,7 @@ You can find your team ID by opening a Figma and looking for the URL segment aft
 - https://www.figma.com/files/team/XXX/project/XXX?fuid=XXX
 - https://www.figma.com/files/XXX/team/XXX?fuid=XXX
 
-# Using the file search
+## Using the file search
 
 Type "fig" then part of a file name to search your Figma files.
 
