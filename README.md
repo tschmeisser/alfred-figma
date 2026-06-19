@@ -33,4 +33,6 @@ Search your figma files from Alfred and then open in the desktop app or browser.
 | `handle.sh`       | Opens the URL, or runs resync in place + notifies |
 | `sync_files.py`   | Regenerates `files.json` from the Figma API |
 | `files.json`      | The file list (lives inside the workflow) |
+| `results.png`     | Icon shown on each search result (and the Resync action) |
+| `icon.png`        | The workflow's icon in Alfred |
 | `package.sh`      | Builds the `.alfredworkflow` bundle |

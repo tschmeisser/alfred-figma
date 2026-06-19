@@ -20,6 +20,7 @@ FILES = os.path.join(HERE, "files.json")
 SYNC = os.path.join(HERE, "sync_files.py")
 LOCK = os.path.join(HERE, ".sync.lock")
 SYNC_TIMEOUT = 180  # seconds a sync is assumed to still be running
+ICON = {"path": "results.png"}  # bundled image, relative to the workflow dir
 
 WEB_PREFIXES = (
     "https://www.figma.com",
@@ -88,7 +89,7 @@ def file_item(entry):
         "arg": to_deeplink(url),
         "match": name,
         "valid": True,
-        "icon": {"type": "fileicon", "path": "/Applications/Figma.app"},
+        "icon": ICON,
         "mods": {"cmd": {"subtitle": "Open in browser", "arg": url}},
     }
 
@@ -100,6 +101,7 @@ def empty_state_item():
             "title": "Syncing your Figma files…",
             "subtitle": "This takes about a minute — search again shortly",
             "valid": False,
+            "icon": ICON,
         }
     if creds_present():
         start_background_sync()
@@ -107,11 +109,13 @@ def empty_state_item():
             "title": "Fetching your Figma files now…",
             "subtitle": "First-time sync started — search again in a moment",
             "valid": False,
+            "icon": ICON,
         }
     return {
         "title": "Add your Figma token to begin",
         "subtitle": "Open the workflow config ([𝓍]) and set your token + team id",
         "valid": False,
+        "icon": ICON,
     }
 
 
@@ -128,6 +132,7 @@ def main():
         "arg": "resync",
         "match": "resync refresh reload sync update",
         "valid": True,
+        "icon": ICON,
     })
 
     print(json.dumps({"items": items}))
