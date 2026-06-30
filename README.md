@@ -2,6 +2,10 @@
 
 Search your figma files from Alfred and then open in the desktop app or browser.
 
+## Download
+
+**[⬇ Download the latest release](https://github.com/tschmeisser/alfred-figma/releases/latest)** — grab `Figma Search.alfredworkflow` from the Assets, then double-click it to import into Alfred.
+
 ## Setup
 
 1. Create a token on figma.com → Settings → Security → Personal Access Token.
@@ -10,7 +14,7 @@ Search your figma files from Alfred and then open in the desktop app or browser.
     - Examples:
     - https://www.figma.com/files/team/XXX/project/XXX?fuid=XXX
     - https://www.figma.com/files/XXX/team/XXX?fuid=XXX
-3. Download the latest `Figma Search.alfredworkflow` from the [Releases page](https://github.com/tschmeisser/alfred-figma/releases), double-click it, and enter your token and team ID.
+3. [Download](https://github.com/tschmeisser/alfred-figma/releases/latest) and double-click `Figma Search.alfredworkflow`, then enter your token and team ID.
 4. Run "fig" and your files will sync.
 5. To edit the workflow yourself and sync files locally, add a .env with two values:
     - figma_token=figd_XXXXXX
@@ -39,3 +43,19 @@ Search your figma files from Alfred and then open in the desktop app or browser.
 The file list (`files.json`) is **not** stored in the repo or the workflow bundle — it's
 written to Alfred's `alfred_workflow_cache` directory at runtime (or `./.cache/` when you
 run the scripts directly from the repo).
+
+## Releasing
+
+The `.alfredworkflow` bundle is gitignored and distributed as a GitHub release, never
+committed. To cut a new version:
+
+```bash
+git push                                    # publish source changes first
+./package.sh                                # builds Figma Search.alfredworkflow (gitignored)
+gh release create vX.Y "Figma Search.alfredworkflow" \
+  --title "Figma Search vX.Y" \
+  --notes "..."
+```
+
+The tag (`vX.Y`) pins the release to a commit; the uploaded `.alfredworkflow` is the file
+users download from the Releases page.
