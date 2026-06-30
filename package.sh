@@ -10,8 +10,7 @@ BUILD="$(mktemp -d)"
 trap 'rm -rf "$BUILD"' EXIT
 
 cp info.plist figma_search.py handle.sh sync_files.py results.png icon.png "$BUILD/"   # never .env
-echo '[]' > "$BUILD/files.json"
 
 rm -f "$OUT"
-( cd "$BUILD" && zip -q "$OLDPWD/$OUT" info.plist figma_search.py handle.sh sync_files.py files.json results.png icon.png )
+( cd "$BUILD" && zip -q "$OLDPWD/$OUT" info.plist figma_search.py handle.sh sync_files.py results.png icon.png )
 echo "Built: $OUT"

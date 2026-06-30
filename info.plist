@@ -147,7 +147,7 @@ Change your token and team id with “Configure Workflow and Variables”.</stri
 				<key>placeholder</key>
 				<string>figd_...</string>
 				<key>required</key>
-				<false/>
+				<true/>
 				<key>trim</key>
 				<true/>
 			</dict>
@@ -168,7 +168,7 @@ Change your token and team id with “Configure Workflow and Variables”.</stri
 				<key>placeholder</key>
 				<string></string>
 				<key>required</key>
-				<false/>
+				<true/>
 				<key>trim</key>
 				<true/>
 			</dict>
@@ -183,12 +183,7 @@ Change your token and team id with “Configure Workflow and Variables”.</stri
 		</dict>
 	</array>
 	<key>variables</key>
-	<dict>
-		<key>figma_token</key>
-		<string></string>
-		<key>figma_team_id</key>
-		<string></string>
-	</dict>
+	<dict/>
 	<key>variablesdontexport</key>
 	<array>
 		<string>figma_token</string>

@@ -10,7 +10,7 @@ Search your figma files from Alfred and then open in the desktop app or browser.
     - Examples:
     - https://www.figma.com/files/team/XXX/project/XXX?fuid=XXX
     - https://www.figma.com/files/XXX/team/XXX?fuid=XXX
-3. Double click the .alfredworkflow file and enter your token and team ID.
+3. Download the latest `Figma Search.alfredworkflow` from the [Releases page](https://github.com/tschmeisser/alfred-figma/releases), double-click it, and enter your token and team ID.
 4. Run "fig" and your files will sync.
 5. To edit the workflow yourself and sync files locally, add a .env with two values:
     - figma_token=figd_XXXXXX
@@ -21,7 +21,7 @@ Search your figma files from Alfred and then open in the desktop app or browser.
 - Type "fig" then part of a file name to search your Figma files.
 - The first time you run the command, it will sync all of your files.
 - From the result list, hitting Return opens the selected file in the desktop app and cmd+Return opens it in the browser.
-- The fig command also returns a "Resync files from Figma" action that refreshes all of your files (the list is saved locally).
+- The fig command also returns a "Resync files from Figma" action that refreshes all of your files (the list is cached in Alfred's workflow cache directory).
 - Change your token and team id with “Configure Workflow and Variables”.
 
 ## Files
@@ -29,10 +29,13 @@ Search your figma files from Alfred and then open in the desktop app or browser.
 | File | Role |
 |------|------|
 | `info.plist`      | Workflow: Script Filter → `handle.sh`; token/team config fields |
-| `figma_search.py` | Reads in-workflow `files.json`, emits items + Resync (no token) |
+| `figma_search.py` | Reads the cached `files.json`, emits items + Resync (no token) |
 | `handle.sh`       | Opens the URL, or runs resync in place + notifies |
 | `sync_files.py`   | Regenerates `files.json` from the Figma API |
-| `files.json`      | The file list (lives inside the workflow) |
 | `results.png`     | Icon shown on each search result (and the Resync action) |
 | `icon.png`        | The workflow's icon in Alfred |
-| `package.sh`      | Builds the `.alfredworkflow` bundle |
+| `package.sh`      | Builds the `.alfredworkflow` bundle (uploaded to Releases) |
+
+The file list (`files.json`) is **not** stored in the repo or the workflow bundle — it's
+written to Alfred's `alfred_workflow_cache` directory at runtime (or `./.cache/` when you
+run the scripts directly from the repo).

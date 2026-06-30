@@ -16,9 +16,12 @@ import subprocess
 import time
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-FILES = os.path.join(HERE, "files.json")
+# Regenerable data lives in Alfred's cache dir, never inside the workflow bundle.
+# Falls back to a local .cache/ when run directly from the repo (no Alfred env).
+CACHE = os.environ.get("alfred_workflow_cache") or os.path.join(HERE, ".cache")
+FILES = os.path.join(CACHE, "files.json")
 SYNC = os.path.join(HERE, "sync_files.py")
-LOCK = os.path.join(HERE, ".sync.lock")
+LOCK = os.path.join(CACHE, ".sync.lock")
 SYNC_TIMEOUT = 180  # seconds a sync is assumed to still be running
 ICON = {"path": "results.png"}  # bundled image, relative to the workflow dir
 
@@ -65,6 +68,7 @@ def sync_running():
 def start_background_sync():
     """Fire-and-forget sync that survives this script exiting."""
     try:
+        os.makedirs(CACHE, exist_ok=True)
         open(LOCK, "w").close()
         subprocess.Popen(
             ["/usr/bin/python3", SYNC],

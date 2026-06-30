@@ -23,8 +23,11 @@ import urllib.error
 import urllib.request
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-FILES = os.path.join(HERE, "files.json")
-LOCK = os.path.join(HERE, ".sync.lock")
+# Regenerable data lives in Alfred's cache dir, never inside the workflow bundle.
+# Falls back to a local .cache/ when run directly from the repo (no Alfred env).
+CACHE = os.environ.get("alfred_workflow_cache") or os.path.join(HERE, ".cache")
+FILES = os.path.join(CACHE, "files.json")
+LOCK = os.path.join(CACHE, ".sync.lock")
 
 
 def load_env():
@@ -100,6 +103,7 @@ def _sync():
             })
 
     out.sort(key=lambda e: e["name"].lower())
+    os.makedirs(CACHE, exist_ok=True)
     tmp = FILES + ".tmp"
     with open(tmp, "w") as f:
         json.dump(out, f, indent=2)
