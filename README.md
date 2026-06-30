@@ -58,4 +58,4 @@ gh release create vX.Y "Figma Search.alfredworkflow" \
 ```
 
 The tag (`vX.Y`) pins the release to a commit; the uploaded `.alfredworkflow` is the file
-users download from the Releases page.
+people download from the Releases page.
