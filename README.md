@@ -8,7 +8,7 @@ Search your figma files from Alfred and then open in the desktop app or browser.
 
 ## Setup
 
-1. Create a token on figma.com → Settings → Security → Personal Access Token.
+1. Create a token on figma.com → Settings → Security → Personal Access Token, with the `folders:read` scope.
 2. Find your team ID by opening figma.com and looking for the URL segment after “team”.
     - This is different depending on what type of account you have, personal accounts always show it and team account require you to visit a project.
     - Examples:

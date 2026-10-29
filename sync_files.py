@@ -2,7 +2,7 @@
 """Regenerate files.json from your Figma account via the REST API.
 
 The Figma API has no "search my files" endpoint, so this walks
-teams -> projects -> files and caches the result locally. Run it whenever
+teams -> folders (recursively) -> files and caches the result locally. Run it whenever
 you want to refresh the list; Alfred then searches the cache instantly.
 
 Usage:
@@ -45,7 +45,7 @@ def load_env():
 
 def api(path, token):
     req = urllib.request.Request(
-        "https://api.figma.com/v1" + path,
+        "https://api.figma.com" + path,
         headers={"X-Figma-Token": token},
     )
     with urllib.request.urlopen(req) as resp:
@@ -86,21 +86,26 @@ def _sync():
             "Find it in figma.com/files/team/<TEAM_ID>/..."
         )
 
+    # Figma renamed projects to folders; folders can nest. Needs folders:read.
     try:
-        projects = api(f"/teams/{team_id}/projects", token).get("projects", [])
+        data = api(f"/v2/teams/{team_id}/folders", token)
     except urllib.error.HTTPError as e:
         body = e.read().decode(errors="replace")
         sys.exit(f"team {team_id}: {e} — {body}")
 
     out = []
-    for proj in projects:
-        files = api(f"/projects/{proj['id']}/files", token).get("files", [])
-        for fobj in files:
+    stack = [(f, f.get("name", "")) for f in data.get("folders", [])]
+    while stack:
+        folder, path = stack.pop()
+        fid = folder["id"]
+        for fobj in api(f"/v2/folders/{fid}/files", token).get("files", []):
             out.append({
                 "name": fobj["name"],
-                "subtitle": proj.get("name", ""),
+                "subtitle": path,
                 "url": f"https://www.figma.com/design/{fobj['key']}/",
             })
+        subs = api(f"/v2/folders/{fid}/folders", token).get("folders", [])
+        stack.extend((sub, f"{path} / {sub.get('name', '')}") for sub in subs)
 
     out.sort(key=lambda e: e["name"].lower())
     os.makedirs(CACHE, exist_ok=True)
