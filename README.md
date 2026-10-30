@@ -8,7 +8,7 @@ Search your figma files from Alfred and then open in the desktop app or browser.
 
 ## Setup
 
-1. Create a token on figma.com → Settings → Security → Personal Access Token, with the `folders:read` scope.
+1. Create a token on figma.com → Settings → Security → Personal Access Token, with the `folders:read` and `file_content:read` scopes (the second one is for page search).
 2. Find your team ID by opening figma.com and looking for the URL segment after “team”.
     - This is different depending on what type of account you have, personal accounts always show it and team account require you to visit a project.
     - Examples:
@@ -22,9 +22,9 @@ Search your figma files from Alfred and then open in the desktop app or browser.
 
 ## Using the file search
 
-- Type "fig" then part of a file name to search your Figma files.
+- Type "fig" then part of a file or page name to search your Figma files and the pages inside them. Page results show the file they belong to.
 - The first time you run the command, it will sync all of your files.
-- From the result list, hitting Return opens the selected file in the desktop app and cmd+Return opens it in the browser.
+- From the result list, hitting Return opens the selected file (or page) in the desktop app and cmd+Return opens it in the browser.
 - The fig command also returns a "Resync files from Figma" action that refreshes all of your files (the list is cached in Alfred's workflow cache directory).
 - Change your token and team id with “Configure Workflow and Variables”.
 
@@ -36,7 +36,7 @@ Search your figma files from Alfred and then open in the desktop app or browser.
 | `figma_search.py` | Reads the cached `files.json`, emits items + Resync (no token) |
 | `handle.sh`       | Opens the URL, or runs resync in place + notifies |
 | `sync_files.py`   | Regenerates `files.json` from the Figma API |
-| `results.png`     | Icon shown on each search result (and the Resync action) |
+| `results.png`     | Icon shown on each file and page result (and the Resync action) |
 | `icon.png`        | The workflow's icon in Alfred |
 | `package.sh`      | Builds the `.alfredworkflow` bundle (uploaded to Releases) |
 

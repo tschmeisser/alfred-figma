@@ -102,7 +102,7 @@
 	<key>readme</key>
 	<string># Setup
 
-You’ll need to create a token on figma.com → Settings → Security → Personal Access Token, with the "folders:read" scope.
+You’ll need to create a token on figma.com → Settings → Security → Personal Access Token, with the "folders:read" and "file_content:read" scopes.
 
 You can find your team ID by opening a Figma and looking for the URL segment after “team” . This is different depending on what type of account you have, personal accounts always show it and team account require you to visit a project. Examples:
 
@@ -152,7 +152,7 @@ Change your token and team id with “Configure Workflow and Variables”.</stri
 				<true/>
 			</dict>
 			<key>description</key>
-			<string>Figma personal access token with the "folders:read" scope. Used only when resyncing.</string>
+			<string>Figma personal access token with the "folders:read" and "file_content:read" scopes. Used only when resyncing.</string>
 			<key>label</key>
 			<string>Figma token</string>
 			<key>type</key>

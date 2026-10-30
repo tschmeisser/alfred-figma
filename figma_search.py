@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Alfred Script Filter backend for Figma Search.
 
-Reads files.json (next to this script, inside the workflow) and emits Alfred
-items plus a "Resync" item. Each file item's arg is a figma:// deep link so the
-desktop app opens it.
+Reads files.json (from Alfred's workflow cache) and emits Alfred items for each
+file, then for each page inside those files, plus a "Resync" item. Each item's
+arg is a figma:// deep link so the desktop app opens it.
 
 First-run behaviour: if the list is empty but a token + team id are configured,
 a background sync is kicked off automatically (non-blocking) so the workflow
@@ -98,6 +98,33 @@ def file_item(entry):
     }
 
 
+def page_items(entry):
+    """One item per page; opens the file at that page via ?node-id=."""
+    url = entry.get("url", "")
+    if not url:
+        return []
+    file_name = entry.get("name") or url
+    path = entry.get("subtitle")
+    where = f"{file_name}   ·   {path}" if path else file_name
+    items = []
+    for page in entry.get("pages") or []:
+        if not isinstance(page, dict) or not page.get("id"):
+            continue
+        name = page.get("name") or page["id"]
+        page_url = f"{url}?node-id={page['id'].replace(':', '-')}"
+        items.append({
+            "title": name,
+            "subtitle": f"Page in {where}",
+            "arg": to_deeplink(page_url),
+            "match": name,
+            "valid": True,
+            "icon": ICON,
+            "mods": {"cmd": {"subtitle": "Open page in browser",
+                             "arg": page_url}},
+        })
+    return items
+
+
 def empty_state_item():
     """Shown when there are no files yet — drives the first-run auto-sync."""
     if sync_running():
@@ -124,8 +151,11 @@ def empty_state_item():
 
 
 def main():
-    items = [it for it in (file_item(e) for e in load_files()
-                           if isinstance(e, dict)) if it]
+    entries = [e for e in load_files() if isinstance(e, dict)]
+    items = [it for it in (file_item(e) for e in entries) if it]
+    # Pages after files, so a file name match stays on top.
+    if items:
+        items += [it for e in entries for it in page_items(e)]
 
     if not items:
         items.append(empty_state_item())
